@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="הכנות 67">
+<meta name="theme-color" content="#c9a96e">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192x192.png">
+<title>67 Winery — מחשבון הכנות למשמרת</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap');
+
+  :root {
+    --bg: #1a1714; --card: #242019; --accent: #c9a96e; --accent-dim: #8a7245;
+    --text: #e8e0d4; --dim: #9a9080; --border: #3a3428;
+    --green: #6b9a6b; --red: #c47a6a; --blue: #6a8fb5;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; min-height: 100dvh;
+    padding: calc(16px + var(--safe-top)) 16px calc(16px + var(--safe-bottom));
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+  .wrap { max-width: 600px; margin: 0 auto; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 24px; }
+  .header small { font-size: 11px; letter-spacing: 5px; color: var(--accent-dim); text-transform: uppercase; }
+  .header h1 { font-size: 22px; font-weight: 300; color: var(--accent); margin-top: 2px; }
+
+  /* Input */
+  .input-section {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .input-label { font-size: 14px; color: var(--dim); margin-bottom: 12px; }
+  .input-row { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .input-row button {
+    width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--accent); font-size: 22px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; font-family: 'Heebo', sans-serif;
+  }
+  .input-row button:active { background: var(--accent); color: var(--bg); transform: scale(0.93); }
+  .input-row input {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+    color: var(--accent); font-size: 36px; font-weight: 700;
+    padding: 6px; width: 120px; text-align: center; outline: none;
+    font-family: 'Heebo', sans-serif;
+  }
+  .input-row input:focus { border-color: var(--accent); }
+  .meta { font-size: 12px; color: var(--dim); margin-top: 12px; }
+
+  /* Quick presets */
+  .presets { display: flex; gap: 8px; margin-top: 14px; justify-content: center; flex-wrap: wrap; }
+  .preset {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 5px 14px; font-size: 13px; color: var(--dim); cursor: pointer;
+    font-family: 'Heebo', sans-serif; transition: all 0.15s;
+  }
+  .preset:active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tab {
+    background: transparent; color: var(--dim); border: 1px solid var(--border);
+    border-radius: 10px; padding: 9px 16px; font-size: 13px; font-weight: 400;
+    cursor: pointer; font-family: 'Heebo', sans-serif; transition: all 0.15s;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .tab.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+  .tab:active:not(.active) { background: var(--border); }
+
+  /* Cards */
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    overflow: hidden; margin-bottom: 12px;
+  }
+  .card-head {
+    padding: 12px 16px; display: flex; justify-content: space-between;
+    align-items: center; border-bottom: 1px solid var(--border);
+  }
+  .card-head .name { font-size: 16px; font-weight: 600; color: var(--accent); }
+  .card-head .couple { font-size: 10px; color: var(--dim); margin-right: 6px; }
+  .badge {
+    background: var(--bg); border-radius: 8px; padding: 4px 12px;
+    font-size: 14px; font-weight: 700; color: var(--green); white-space: nowrap;
+  }
+  .card-body { padding: 8px 16px; }
+  .row {
+    display: flex; align-items: center; padding: 8px 0; gap: 8px;
+  }
+  .row:not(:last-child) { border-bottom: 1px solid rgba(58,52,40,0.15); }
+  .row .item-name { font-size: 13px; flex: 1; line-height: 1.4; }
+  .row .item-qty {
+    font-size: 14px; font-weight: 700; color: var(--accent);
+    white-space: nowrap; min-width: 60px; text-align: left;
+  }
+  .row .item-storage {
+    font-size: 10px; color: var(--dim); background: var(--bg);
+    border-radius: 4px; padding: 3px 7px; white-space: nowrap;
+  }
+  .row .item-dish { font-size: 11px; color: var(--dim); white-space: nowrap; }
+
+  /* Storage view */
+  .storage-title {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    font-size: 14px; font-weight: 600; color: var(--blue);
+  }
+
+  /* Fixed preps */
+  .fixed-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px 16px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .fixed-icon { font-size: 26px; }
+  .fixed-info { flex: 1; }
+  .fixed-name { font-size: 15px; font-weight: 600; color: var(--accent); }
+  .fixed-qty { font-size: 12px; color: var(--dim); }
+  .fixed-freq {
+    background: var(--bg); border-radius: 8px; padding: 5px 12px;
+    font-size: 12px; font-weight: 600; color: var(--red); white-space: nowrap;
+  }
+
+  /* Empty */
+  .empty { text-align: center; padding: 50px 20px; color: var(--dim); }
+  .empty .icon { font-size: 44px; margin-bottom: 12px; }
+  .note { font-size: 12px; color: var(--dim); margin-bottom: 10px; }
+
+  /* Animations */
+  .card, .fixed-card { animation: fadeUp 0.25s ease-out; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <small>67 Winery</small>
+    <h1>מחשבון הכנות למשמרת</h1>
+  </div>
+
+  <div class="input-section">
+    <div class="input-label">מספר סועדים</div>
+    <div class="input-row">
+      <button onclick="adjust(10)">+</button>
+      <input type="number" id="dinersInput" min="0" inputmode="numeric" pattern="[0-9]*" placeholder="0" oninput="calculate()">
+      <button onclick="adjust(-10)">−</button>
+    </div>
+    <div class="presets">
+      <div class="preset" onclick="setDiners(40)">40</div>
+      <div class="preset" onclick="setDiners(60)">60</div>
+      <div class="preset" onclick="setDiners(80)">80</div>
+      <div class="preset" onclick="setDiners(100)">100</div>
+      <div class="preset" onclick="setDiners(120)">120</div>
+      <div class="preset" onclick="setDiners(150)">150</div>
+    </div>
+    <div class="meta" id="metaInfo"></div>
+  </div>
+
+  <div class="tabs" id="tabs" style="display:none;">
+    <button class="tab active" onclick="switchTab('dishes',this)">🍽️ לפי מנה</button>
+    <button class="tab" onclick="switchTab('aggregate',this)">📦 לפי אחסון</button>
+    <button class="tab" onclick="switchTab('fixed',this)">🔁 הכנות קבועות</button>
+  </div>
+
+  <div id="content">
+    <div class="empty"><div class="icon">🍷</div><div>הכנס מספר סועדים להתחיל</div></div>
+  </div>
+</div>
+
+<script>
+const DISHES = [
+  { id:"caprese", name:"סלט קפרזה", rate:0.15, couple:false, ingredients:[
+    {name:"שרי",qty:300,unit:"גרם",storage:"קופסה 15L"},
+    {name:"בייבי מוצרלה",qty:70,unit:"גרם",storage:"קופסה 4.5L"},
+    {name:"עלי רוקט",qty:15,unit:"גרם (חופן)",storage:"קופסה 4.5L"},
+    {name:"בצל סגול (חצאי ירח דק)",qty:10,unit:"גרם",storage:"גסטרונום"},
+    {name:"זיתי קלמטה",qty:8,unit:"גרם (½ כף)",storage:"גסטרונום"},
+  ]},
+  { id:"caesar", name:"סלט קיסר", rate:0.15, couple:false, ingredients:[
+    {name:"לב חסה קיסר",qty:0.6,unit:"יח׳",storage:"קופסה 15L"},
+    {name:"קרוטונים",qty:30,unit:"גרם (חופן)",storage:"גסטרונום"},
+    {name:"רוטב קיסר",qty:50,unit:"מ״ל",storage:"סקוויזר 1L"},
+    {name:"פרמז׳ן גרוס",qty:10,unit:"גרם (כף)",storage:"גסטרונום"},
+  ]},
+  { id:"grape", name:"עלי גפן", rate:0.15, couple:false, ingredients:[
+    {name:"לאבנה",qty:25,unit:"גרם (כף גדושה)",storage:"קופסה 4.5L"},
+    {name:"עלי גפן (קנוי)",qty:5,unit:"יח׳",storage:"קופסה 4.5L"},
+    {name:"שמן צ׳ילי (עיטור)",qty:5,unit:"מ״ל",storage:"סקוויזר 1L"},
+  ]},
+  { id:"platter", name:"פלטת גבינות זוגית", rate:0.30, couple:true, ingredients:[
+    {name:"מנצ׳גו כמהין (משולשים)",qty:70,unit:"גרם",storage:"קופסה 4.5L גבינות"},
+    {name:"צ׳דר (קוביות)",qty:70,unit:"גרם",storage:"קופסה 4.5L גבינות"},
+    {name:"פיקורינו (משולשים)",qty:70,unit:"גרם",storage:"קופסה 4.5L גבינות"},
+    {name:"בולגרית (מלבנים 0.5 ס״מ)",qty:80,unit:"גרם",storage:"קופסה 4.5L גבינות"},
+    {name:"פסיפלורה",qty:0.5,unit:"יח׳",storage:"קופסה 4.5L פירות"},
+    {name:"קיווי (חצאי ירח)",qty:0.5,unit:"יח׳",storage:"קופסה 4.5L פירות"},
+    {name:"תפוז דם (חצאי ירח)",qty:0.5,unit:"יח׳",storage:"קופסה 4.5L פירות"},
+    {name:"בוטנים",qty:20,unit:"גרם (חופן)",storage:"קופסה 4.5L"},
+    {name:"פרכיות תירס קטנות",qty:6.5,unit:"יח׳",storage:"קופסה 4.5L"},
+    {name:"פסטו עגב׳ מיובשות",qty:30,unit:"מ״ל",storage:"סקוויזר 1L"},
+    {name:"טפנד זיתים",qty:30,unit:"מ״ל",storage:"סקוויזר 1L"},
+    {name:"חמאה (קוקוט)",qty:1,unit:"יח׳",storage:"קופסה 4.5L"},
+    {name:"לאבנה (קוקוט)",qty:25,unit:"גרם",storage:"קופסה 4.5L"},
+    {name:"חסה לסלטון",qty:20,unit:"גרם",storage:"קופסה 4.5L"},
+    {name:"פקאן גרוס לסלטון",qty:5,unit:"גרם",storage:"קופסה 4.5L"},
+    {name:"פרמז׳ן גרוס לסלטון",qty:5,unit:"גרם",storage:"גסטרונום"},
+    {name:"לחם מחמצת (פרוסות 1.5 ס״מ)",qty:3,unit:"פרוסות",storage:"קופסה 15L"},
+  ]},
+  { id:"focaccia", name:"פוקצ׳ה חריפים", rate:0.10, couple:false, ingredients:[
+    {name:"פלפל חריף מטוגן",qty:1,unit:"יח׳",storage:"גסטרונום"},
+    {name:"סלסת עגבניות",qty:30,unit:"מ״ל",storage:"סקוויזר 1L"},
+    {name:"טחינה",qty:30,unit:"מ״ל",storage:"סקוויזר 1L"},
+    {name:"שמן זית בלסמי",qty:30,unit:"מ״ל",storage:"סקוויזר 1L"},
+  ]},
+];
+
+const FIXED = [
+  {name:"רוטב קיסר",qty:"10 ליטר",freq:"דו-שבועי",icon:"🫙"},
+  {name:"קרוטונים",qty:"20 ליטר",freq:"דו-שבועי",icon:"🍞"},
+  {name:"סלסת עגבניות",qty:"3 ליטר",freq:"שבועי",icon:"🍅"},
+  {name:"שמן צ׳ילי",qty:"סבב הכנה",freq:"דו-חודשי",icon:"🌶️"},
+];
+
+const BUFFER = 1.10;
+let currentTab = 'dishes';
+
+function fmt(val, unit) {
+  const base = unit.split(" ")[0];
+  if (base === "יח׳" || base === "פרוסות") return Math.ceil(val) + " " + base;
+  if (val >= 1000 && base === "גרם") return (val/1000).toFixed(2) + " ק״ג";
+  if (val >= 1000 && base === "מ״ל") return (val/1000).toFixed(2) + " ליטר";
+  return Math.ceil(val) + " " + base;
+}
+
+function setDiners(n) {
+  document.getElementById('dinersInput').value = n;
+  calculate();
+}
+
+function adjust(delta) {
+  const input = document.getElementById('dinersInput');
+  const current = parseInt(input.value) || 0;
+  input.value = Math.max(0, current + delta);
+  calculate();
+}
+
+function switchTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  calculate();
+}
+
+function calculate() {
+  const diners = Math.max(0, parseInt(document.getElementById('dinersInput').value) || 0);
+  const content = document.getElementById('content');
+  const tabs = document.getElementById('tabs');
+  const meta = document.getElementById('metaInfo');
+
+  if (diners <= 0) {
+    tabs.style.display = 'none';
+    meta.textContent = '';
+    content.innerHTML = '<div class="empty"><div class="icon">🍷</div><div>הכנס מספר סועדים להתחיל</div></div>';
+    return;
+  }
+
+  tabs.style.display = 'flex';
+
+  const results = DISHES.map(d => {
+    const raw = diners * d.rate;
+    const portions = d.couple ? Math.ceil((raw / 2) * BUFFER) : Math.ceil(raw * BUFFER);
+    const items = d.ingredients.map(ing => ({...ing, total: portions * ing.qty}));
+    return {...d, portions, items};
+  });
+
+  const totalPortions = results.reduce((s, d) => s + d.portions, 0);
+  meta.textContent = `כולל 10% מקדם ביטחון · ${totalPortions} מנות סה״כ`;
+
+  if (currentTab === 'dishes') {
+    content.innerHTML = results.map(dish => `
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <span class="name">${dish.name}</span>
+            ${dish.couple ? '<span class="couple">(זוגית)</span>' : ''}
+          </div>
+          <div class="badge">${dish.portions} מנות</div>
+        </div>
+        <div class="card-body">
+          ${dish.items.map(item => `
+            <div class="row">
+              <span class="item-name">${item.name}</span>
+              <span class="item-qty">${fmt(item.total, item.unit)}</span>
+              <span class="item-storage">${item.storage}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+  else if (currentTab === 'aggregate') {
+    const storageMap = {};
+    results.forEach(d => {
+      d.items.forEach(item => {
+        if (!storageMap[item.storage]) storageMap[item.storage] = [];
+        storageMap[item.storage].push({name:item.name, total:item.total, unit:item.unit, dish:d.name});
+      });
+    });
+    content.innerHTML = Object.entries(storageMap).map(([storage, items]) => `
+      <div class="card">
+        <div class="storage-title">📦 ${storage}</div>
+        <div class="card-body">
+          ${items.map(item => `
+            <div class="row">
+              <span class="item-name">${item.name}</span>
+              <span class="item-dish">${item.dish}</span>
+              <span class="item-qty">${fmt(item.total, item.unit)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+  else if (currentTab === 'fixed') {
+    content.innerHTML = '<div class="note">הכנות קבועות — לא תלויות במספר סועדים</div>' +
+      FIXED.map(p => `
+        <div class="fixed-card">
+          <span class="fixed-icon">${p.icon}</span>
+          <div class="fixed-info">
+            <div class="fixed-name">${p.name}</div>
+            <div class="fixed-qty">${p.qty}</div>
+          </div>
+          <div class="fixed-freq">${p.freq}</div>
+        </div>
+      `).join('');
+  }
+}
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
