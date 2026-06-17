@@ -186,7 +186,7 @@ const DISHES = [
     {name:"בצל סגול (חצאי ירח דק)",qty:10,unit:"גרם",storage:"גסטרונום"},
     {name:"זיתי קלמטה",qty:8,unit:"גרם (½ כף)",storage:"גסטרונום"},
   ]},
-  { id:"caesar", name:"סלט קיסר", rate:0.25, couple:false, ingredients:[
+  { id:"caesar", name:"סלט קיסר", rate:0.22, couple:false, ingredients:[
     {name:"לב חסה קיסר",qty:0.6,unit:"יח׳",storage:"קופסה 15L"},
     {name:"קרוטונים",qty:30,unit:"גרם (חופן)",storage:"גסטרונום"},
     {name:"רוטב קיסר",qty:50,unit:"מ״ל",storage:"סקוויזר 1L"},
@@ -202,20 +202,17 @@ const DISHES = [
     {name:"צ׳דר (קוביות)",qty:70,unit:"גרם",storage:"קופסה 4.5L גבינות"},
     {name:"ברי (משולשים)",qty:50,unit:"גרם",storage:"קופסה 4.5L גבינות"},
     {name:"בולגרית (מלבנים 0.5 ס״מ)",qty:80,unit:"גרם",storage:"קופסה 4.5L גבינות"},
-    {name:"בולגרית ",qty:80,unit:"גרם",storage:"קופסה 4.5L גבינות"},
-    {name:"פסיפלורה",qty:0.5,unit:"יח׳",storage:"קופסה 4.5L פירות"},
-    {name:"קיווי (חצאי ירח)",qty:0.5,unit:"יח׳",storage:"קופסה 4.5L פירות"},
-    {name:"תפוז דם (חצאי ירח)",qty:0.5,unit:"יח׳",storage:"קופסה 4.5L פירות"},
+    {name:"פסטו ",qty:80,unit:"גרם",storage:"קופסה 4.5L גבינות"},
+    {name:"אננס",qty:0.5,unit:"יח׳",storage:"קופסה 4.5L פירות"},
     {name:"בוטנים",qty:20,unit:"גרם (חופן)",storage:"קופסה 4.5L"},
-    {name:"פרכיות תירס קטנות",qty:6.5,unit:"יח׳",storage:"קופסה 4.5L"},
-    {name:"פסטו עגב׳ מיובשות",qty:30,unit:"מ״ל",storage:"סקוויזר 1L"},
-    {name:"טפנד זיתים",qty:30,unit:"מ״ל",storage:"סקוויזר 1L"},
+    {name:"קרקרים",qty:6.5,unit:"יח׳",storage:"קופסה 4.5L"},
+    {name:"(קוקוט) פסטו ",qty:1,unit:"יח׳",storage:"סקוויזר 1L"},
+    {name:"(קוקוט) ארטישוק",qty:1,unit:"יח׳",storage:"סקוויזר 1L"},
     {name:"חמאה (קוקוט)",qty:1,unit:"יח׳",storage:"קופסה 4.5L"},
-    {name:"לאבנה (קוקוט)",qty:25,unit:"גרם",storage:"קופסה 4.5L"},
-    {name:"חסה לסלטון",qty:20,unit:"גרם",storage:"קופסה 4.5L"},
+    {name:"חסה לסלטון",qty:1,unit:"יח׳",storage:"קופסה 4.5L"},
     {name:"פקאן גרוס לסלטון",qty:5,unit:"גרם",storage:"קופסה 4.5L"},
     {name:"פרמז׳ן גרוס לסלטון",qty:5,unit:"גרם",storage:"גסטרונום"},
-    {name:"לחם מחמצת (פרוסות 1.5 ס״מ)",qty:3,unit:"פרוסות",storage:"קופסה 15L"},
+    {name:"לחם מחמצת ",qty:1,unit:"כיכר",storage:"קופסה 15L"},
   ]},
   { id:"focaccia", name:"פוקצ׳ה חריפים", rate:0.10, couple:false, ingredients:[
     {name:"פלפל חריף מטוגן",qty:1,unit:"יח׳",storage:"גסטרונום"},
@@ -237,7 +234,7 @@ let currentTab = 'dishes';
 
 function fmt(val, unit) {
   const base = unit.split(" ")[0];
-  if (base === "יח׳" || base === "פרוסות") return Math.ceil(val) + " " + base;
+  if (base === "יח׳" || base === "כיכר") return Math.ceil(val) + " " + base;
   if (val >= 1000 && base === "גרם") return (val/1000).toFixed(2) + " ק״ג";
   if (val >= 1000 && base === "מ״ל") return (val/1000).toFixed(2) + " ליטר";
   return Math.ceil(val) + " " + base;
